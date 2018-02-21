@@ -1,0 +1,5 @@
+.App-container {
+  display: flex;
+  height: 100vh;
+  flex-flow: row;
+}

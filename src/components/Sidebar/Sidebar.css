@@ -1,0 +1,13 @@
+.Sidebar-container {
+  display: flex;
+  flex-flow: row;
+  background-color: rgb(39, 33, 33);
+  color: white;
+  width: 100px;
+}
+
+.Sidebar-icons {
+  display: flex;
+  flex-flow: row;
+  align-self: flex-end;
+}
