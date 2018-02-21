@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getLikes, saveBooks } from '../../redux/actions/books';
-
+import Shelf from '../Shelf';
 import './Content.css';
 
 
@@ -11,7 +11,8 @@ class Content extends React.Component {
     axios.post('/books');
   }
 
-  merge = () => {
+
+  bookShelf = () => {
     const bookShelf = [];
     for (let i = 0; i < this.props.booksArr.length; i += 1) {
       bookShelf[i] = Object.assign(
@@ -19,11 +20,12 @@ class Content extends React.Component {
         this.props.likesArr[i],
       );
     }
-    return bookShelf;
-  }
-
-  bookShelf = () => {
-    this.merge().forEach(item => console.log(item));
+    const group = {};
+    bookShelf.forEach((elem) => {
+      if (group[elem.author] === undefined) { group[elem.author] = [elem]; }
+      group[elem.author].push(elem);
+    });
+    return Object.keys(group).map(author => <Shelf text={author} data={group[author]} />);
   }
 
   render() {
@@ -32,7 +34,7 @@ class Content extends React.Component {
         <div className="Content-container"> No books found <button onClick={this.props.getBooks}>Get</button></div>
       );
     }
-    return (<div className="Content-container"><button onClick={() => this.bookShelf()}>check</button></div>);
+    return (<div className="Content-container">{this.bookShelf()}</div>);
   }
 }
 
